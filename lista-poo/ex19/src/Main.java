@@ -4,11 +4,10 @@ public class Main {
 
         s1.adicionarFuncionario(new Funcionario(1, "Mariana", "Desenvolvedor"));
         s1.adicionarFuncionario(new Funcionario(2, "Alberoni", "Analista"));
-        s1.adicionarFuncionario(new Funcionario(3, "Dudu", "Gerente"));
 
         s1.listarFuncionarios();
 
-        s1.atualizarFuncionario(2, "Maria Santos", "Analista Sênior");
+        s1.atualizarFuncionario(2, "Mariana", "Desenvolvedor Sênior");
 
         s1.removerFuncionario(1);
 

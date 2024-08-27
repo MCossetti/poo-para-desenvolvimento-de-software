@@ -15,7 +15,7 @@ public class Sistema {
 
     public void removerFuncionario(int id) {
         funcionarios.removeIf(funcionario -> funcionario.getId() == id);
-        System.out.println("Funcionário removido com ID: " + id);
+        System.out.println("\nFuncionário removido com ID: " + id);
     }
 
     public void atualizarFuncionario(int id, String nome, String cargo) {
@@ -23,7 +23,7 @@ public class Sistema {
             if (funcionario.getId() == id) {
                 funcionario.setNome(nome);
                 funcionario.setCargo(cargo);
-                System.out.println("Funcionário atualizado: " + funcionario.getNome());
+                System.out.println("\nFuncionário atualizado: " + funcionario.getNome());
                 return;
             }
         }
@@ -32,9 +32,9 @@ public class Sistema {
 
     public void listarFuncionarios() {
         if (funcionarios.isEmpty()) {
-            System.out.println("Nenhum funcionário encontrado.");
+            System.out.println("\nNenhum funcionário encontrado.");
         } else {
-            System.out.println("Lista de Funcionários:");
+            System.out.println("\nLista de Funcionários:");
             for (Funcionario funcionario : funcionarios) {
                 System.out.println(funcionario);
             }
