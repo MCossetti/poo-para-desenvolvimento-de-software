@@ -1,0 +1,95 @@
+CREATE DATABASE gerenciamentoestoque;
+
+USE gerenciamentoestoque;
+
+CREATE TABLE usuario(
+id BIGINT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR(100) NOT NULL,
+email VARCHAR(150) NOT NULL UNIQUE,
+senha VARCHAR(200) NOT NULL,
+perfil VARCHAR(10) NOT NULL,
+estado TINYINT NOT NULL DEFAULT 0, 
+dataCriacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+ultimoLogin TIMESTAMP
+);
+
+CREATE TABLE permissao (
+id BIGINT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR(75) NOT NULL UNIQUE,
+descricao VARCHAR(200)
+);
+
+CREATE TABLE usuarioPermissao(
+permissaoId BIGINT NOT NULL,
+usuarioId BIGINT NOT NULL,
+PRIMARY KEY(permissaoId, usuarioId),
+CONSTRAINT fk_usuarioPermissao_permissaoId FOREIGN KEY(permissaoID) references permissao(id),
+CONSTRAINT fk_usuarioPermissao_usuarioId FOREIGN KEY(usuarioID) references usuario(id)
+);
+
+CREATE TABLE categoria(
+id INT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR(75) NOT NULL UNIQUE,
+descricao VARCHAR(200)
+);
+
+CREATE TABLE produto(
+id BIGINT PRIMARY KEY AUTO_INCREMENT, 
+nome VARCHAR(100) NOT NULL UNIQUE,
+descricao VARCHAR(200),
+categoriaId INT NOT NULL,
+preco DECIMAL(10, 2) NOT NULL,
+dataCriacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+usuarioId BIGINT NOT NULL,
+CONSTRAINT fk_produto_usuarioId FOREIGN KEY(usuarioID) references usuario(id),
+CONSTRAINT fk_produto_categoriaId FOREIGN KEY(categoriaID) references categoria(id)
+);
+
+CREATE TABLE estoque(
+id BIGINT PRIMARY KEY AUTO_INCREMENT, 
+produtoId BIGINT NOT NULL UNIQUE,
+quantidade INT NOT NULL,
+estado TINYINT DEFAULT 0,
+usuarioId BIGINT NOT NULL,
+dataCriacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+CONSTRAINT fk_estoque_produtoId FOREIGN KEY(produtoID) references produto(id),
+CONSTRAINT fk_estoque_usuarioId FOREIGN KEY(usuarioID) references usuario(id)
+);
+
+CREATE TABLE historicoEstoque(
+id BIGINT PRIMARY KEY AUTO_INCREMENT, 
+produto VARCHAR(100) NOT NULL,
+quantidade INT NOT NULL,
+estado VARCHAR(10) NOT NULL,
+usuarioId VARCHAR(100) NOT NULL,
+observacao VARCHAR(100) NOT NULL,
+dataCriacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE cliente(
+id BIGINT PRIMARY KEY AUTO_INCREMENT,
+nome VARCHAR(75),
+cpf VARCHAR(15) NOT NULL UNIQUE,
+endereco VARCHAR(100)
+);
+
+CREATE TABLE venda(
+id BIGINT PRIMARY KEY AUTO_INCREMENT, 
+totalVenda DECIMAL(10, 2) NOT NULL,
+valorPago DECIMAL(10, 2) NOT NULL,
+desconto DECIMAL(10, 2) NOT NULL,
+troco DECIMAL(10, 2) NOT NULL,
+clienteId BIGINT NOT NULL,
+usuarioId BIGINT NOT NULL,
+dataCriacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+dataAlteracao TIMESTAMP
+);
+
+CREATE TABLE vendaItem(
+vendaId BIGINT NOT NULL,
+produtoId BIGINT NOT NULL,
+quantidade INT NOT NULL,
+desconto DECIMAL(10, 2) NOT NULL,
+preco DECIMAL(10, 2) NOT NULL,
+total DECIMAL(10, 2) NOT NULL
+);
